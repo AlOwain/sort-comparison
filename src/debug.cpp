@@ -8,7 +8,7 @@ std::vector<int> insertion_sort(std::vector<int> array)
         max = array[i];
 
         for (j = i - 1; j >= 0; j--)
-            if (array[j] > max) break;
+            if (array[j] <= max) break;
             else array[j + 1] = array[j];
         array[j + 1] = max;
     }
