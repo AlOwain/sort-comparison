@@ -26,15 +26,20 @@ std::vector<int> split(std::vector<int> array, int start, int end)
     return std::vector<int>(s_iter, e_iter);
 }
 
-std::vector<int> merge_sort(std::vector<int> arr) {
-    print(arr);
-    if (1 < arr.size()) {
-        merge_sort(split(arr, 0, arr.size() / 2));
-        merge_sort(split(arr, arr.size() / 2, arr.size()));
+std::vector<int> conquer(std::vector<int> array)
+{
+
+    return insertion_sort(array);
+}
+
+std::vector<int> merge_sort(std::vector<int> array) {
+    if (1 < array.size()) {
+        merge_sort(split(array, 0, array.size() / 2));
+        merge_sort(split(array, array.size() / 2, array.size()));
     }
 
     // HERE YOU SHOULD START SORTING
-    return insertion_sort(arr);
+    return insertion_sort(array);
 }
 
 void print(std::vector<int> array)
