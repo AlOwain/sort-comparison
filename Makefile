@@ -1,5 +1,4 @@
-# all: build build/lib
-all: build build/debug
+all: build build/main
 
 build:
 	mkdir -p build
@@ -8,8 +7,8 @@ clean:
 	rm -r build
 
 # Debug
-build/debug: build/debug.o
-	g++ build/debug.o -o build/debug
+build/main: build/main.o
+	g++ build/main.o -o build/main
 
-build/debug.o: src/debug.cpp
-	g++ -c src/debug.cpp -o build/debug.o
+build/main.o: src/main.cpp
+	g++ -c src/main.cpp -o build/main.o

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <time.h>
+#include <stdlib.h>
 
 void print(std::vector<int> array)
 {
@@ -84,34 +85,47 @@ std::vector<int> merge_sort(std::vector<int> array)
     return array;
 }
 
-void test(std::vector<int> array, const char* desc)
+void test(const std::vector<int> array, int repeat, const char* desc)
 {
     std::cout << "CPU time elapsed (" << desc << "): \n";
     clock_t s, e;
 
     s = clock();
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < repeat; i++)
         merge_sort(array);
     e = clock();
 
-    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
+    std::cout << "\t" << (double)(((e - s) / (double)repeat) / (double)CLOCKS_PER_SEC) << "\n";
 
     s = clock();
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < repeat; i++)
         insertion_sort(array);
     e = clock();
 
-    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
+    std::cout << "\t" << (double)(((e - s) / (double)repeat) / (double)CLOCKS_PER_SEC) << "\n";
 }
 
 int main(int argc, char** argv)
 {
-    std::vector<int> test1 = {1, 12, 9, 0, 8, 2, 6, 11, 53, 28, 5, 3};
-    std::vector<int> test2 = {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-    std::vector<int> test3 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int sample_size = 1'000'000;
+    int repeat = 100;
 
-    test(test1, "random");
-    test(test2, "reverse");
-    test(test3, "sorted");
+    std::vector<int> array(sample_size);
+    std::vector<int> reversed_array(sample_size);
+
+    std::vector<int> random_array(sample_size);
+    srand(time(NULL));
+
+    for (int i = 0; i < sample_size; i++)
+    {
+        array[i] = i;
+        reversed_array[i] = sample_size - i;
+        random_array[i] = rand() % 10000;
+    }
+
+    test(array, repeat, "sorted");
+    test(random_array, repeat, "random");
+    test(reversed_array, repeat, "reverse");
+
     return 0;
 }
