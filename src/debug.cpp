@@ -1,8 +1,14 @@
 #include <iostream>
-#include <ostream>
 #include <vector>
 
-void print(std::vector<int> array);
+// FIXME: report edge case: (only 1 entry)
+
+void print(std::vector<int> array)
+{
+    for (int i : array)
+        std::cout << i << " ";
+    std::cout << std::endl;
+}
 
 std::vector<int> insertion_sort(std::vector<int> array)
 {
@@ -26,32 +32,41 @@ std::vector<int> split(std::vector<int> array, int start, int end)
     return std::vector<int>(s_iter, e_iter);
 }
 
-std::vector<int> conquer(std::vector<int> array)
+std::vector<int> merge(std::vector<int> left, std::vector<int> right)
 {
-
-    return insertion_sort(array);
-}
-
-std::vector<int> merge_sort(std::vector<int> array) {
-    if (1 < array.size()) {
-        merge_sort(split(array, 0, array.size() / 2));
-        merge_sort(split(array, array.size() / 2, array.size()));
+    std::vector<int> array(left.size() + right.size());
+    
+    int i = 0;
+    for (int x : left)
+    {
+        array[i] = x;
+        i++;
     }
 
-    // HERE YOU SHOULD START SORTING
-    return insertion_sort(array);
+    for (int x : right)
+    {
+        array[i] = x;
+        i++;
+    }
+    return array;
 }
 
-void print(std::vector<int> array)
+std::vector<int> merge_sort(std::vector<int> array)
 {
-    for (int i : array)
-        std::cout << i << " ";
-    std::cout << std::endl;
+    std::vector<int> left, right;
+
+    left = split(array, 0, array.size() / 2);
+    right = split(array, array.size() / 2, array.size());
+
+    if (array.size() > 3)
+        array = merge(merge_sort(left), merge_sort(right));
+
+    return array;
 }
 
 int main(int argc, char** argv)
 {
-    std::vector<int> test = {1, 12, 9, 0, 8, 2, 6, 11, 53, 28, 5, 3};
+    std::vector<int> test = {9, 8, 7, 6, 5, 4, 3, 2, 1};
 
     print(merge_sort(test));
 
