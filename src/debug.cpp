@@ -84,59 +84,34 @@ std::vector<int> merge_sort(std::vector<int> array)
     return array;
 }
 
+void test(std::vector<int> array, const char* desc)
+{
+    std::cout << "CPU time elapsed (" << desc << "): \n";
+    clock_t s, e;
+
+    s = clock();
+    for (int i = 0; i < 100000; i++)
+        merge_sort(array);
+    e = clock();
+
+    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
+
+    s = clock();
+    for (int i = 0; i < 100000; i++)
+        insertion_sort(array);
+    e = clock();
+
+    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
+}
+
 int main(int argc, char** argv)
 {
-    clock_t s, e;
-    std::vector<int> test = {1, 12, 9, 0, 8, 2, 6, 11, 53, 28, 5, 3};
+    std::vector<int> test1 = {1, 12, 9, 0, 8, 2, 6, 11, 53, 28, 5, 3};
     std::vector<int> test2 = {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
     std::vector<int> test3 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    std::cout << "CPU time elapsed (test): \n";
-    s = clock();
-    for (int i = 0; i < 100000; i++)
-        merge_sort(test);
-    e = clock();
-
-    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
-
-    s = clock();
-    for (int i = 0; i < 100000; i++)
-        insertion_sort(test);
-    e = clock();
-
-    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
-
-    std::cout << "CPU time elapsed (test2): \n";
-
-    s = clock();
-    for (int i = 0; i < 100000; i++)
-        merge_sort(test2);
-    e = clock();
-
-    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
-
-    s = clock();
-    for (int i = 0; i < 100000; i++)
-        insertion_sort(test2);
-    e = clock();
-
-    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
-
-    std::cout << "CPU time elapsed (test3): \n";
-
-    s = clock();
-    for (int i = 0; i < 100000; i++)
-        merge_sort(test3);
-    e = clock();
-
-    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
-
-    s = clock();
-    for (int i = 0; i < 100000; i++)
-        insertion_sort(test3);
-    e = clock();
-
-    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
-
+    test(test1, "random");
+    test(test2, "reverse");
+    test(test3, "sorted");
     return 0;
 }
