@@ -1,7 +1,7 @@
+#include <ctime>
 #include <iostream>
 #include <vector>
-
-// FIXME: report edge case: (only 1 entry)
+#include <time.h>
 
 void print(std::vector<int> array)
 {
@@ -86,24 +86,57 @@ std::vector<int> merge_sort(std::vector<int> array)
 
 int main(int argc, char** argv)
 {
+    clock_t s, e;
     std::vector<int> test = {1, 12, 9, 0, 8, 2, 6, 11, 53, 28, 5, 3};
-    std::vector<int> test1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    std::vector<int> test2 = {0, 0, 0, 0, 0, 0 ,0};
-    std::vector<int> test3 = {1};
-    std::vector<int> test4 = {-1, -43, -3, 0, 0, 43, 22, 1};
+    std::vector<int> test2 = {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+    std::vector<int> test3 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    print(merge_sort(test));
-    print(merge_sort(test1));
-    print(merge_sort(test2));
-    print(merge_sort(test3));
-    print(merge_sort(test4));
+    std::cout << "CPU time elapsed (test): \n";
+    s = clock();
+    for (int i = 0; i < 100000; i++)
+        merge_sort(test);
+    e = clock();
 
-    std::cout << "\n\n";
-    print(insertion_sort(test));
-    print(insertion_sort(test1));
-    print(insertion_sort(test2));
-    print(insertion_sort(test3));
-    print(insertion_sort(test4));
+    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
+
+    s = clock();
+    for (int i = 0; i < 100000; i++)
+        insertion_sort(test);
+    e = clock();
+
+    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
+
+    std::cout << "CPU time elapsed (test2): \n";
+
+    s = clock();
+    for (int i = 0; i < 100000; i++)
+        merge_sort(test2);
+    e = clock();
+
+    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
+
+    s = clock();
+    for (int i = 0; i < 100000; i++)
+        insertion_sort(test2);
+    e = clock();
+
+    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
+
+    std::cout << "CPU time elapsed (test3): \n";
+
+    s = clock();
+    for (int i = 0; i < 100000; i++)
+        merge_sort(test3);
+    e = clock();
+
+    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
+
+    s = clock();
+    for (int i = 0; i < 100000; i++)
+        insertion_sort(test3);
+    e = clock();
+
+    std::cout << "\t" << (float)((e - s) / (float)CLOCKS_PER_SEC) << "\n";
 
     return 0;
 }
