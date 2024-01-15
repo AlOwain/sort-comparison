@@ -1,5 +1,8 @@
 #include <iostream>
+#include <ostream>
 #include <vector>
+
+void print(std::vector<int> array);
 
 std::vector<int> insertion_sort(std::vector<int> array)
 {
@@ -15,6 +18,25 @@ std::vector<int> insertion_sort(std::vector<int> array)
     return array;
 }
 
+std::vector<int> split(std::vector<int> array, int start, int end)
+{
+    auto s_iter = array.begin() + start;
+    auto e_iter = array.begin() + end;
+
+    return std::vector<int>(s_iter, e_iter);
+}
+
+std::vector<int> merge_sort(std::vector<int> arr) {
+    print(arr);
+    if (1 < arr.size()) {
+        merge_sort(split(arr, 0, arr.size() / 2));
+        merge_sort(split(arr, arr.size() / 2, arr.size()));
+    }
+
+    // HERE YOU SHOULD START SORTING
+    return insertion_sort(arr);
+}
+
 void print(std::vector<int> array)
 {
     for (int i : array)
@@ -24,9 +46,9 @@ void print(std::vector<int> array)
 
 int main(int argc, char** argv)
 {
-    std::vector<int> test = {1, 12, 9, 0, 5, 3};
+    std::vector<int> test = {1, 12, 9, 0, 8, 2, 6, 11, 53, 28, 5, 3};
 
-    print(insertion_sort(test));
+    print(merge_sort(test));
 
     return 0;
 }
