@@ -108,7 +108,7 @@ void test(const std::vector<int> array, int repeat, const char* desc)
 int main(int argc, char** argv)
 {
     int sample_size = 1'000'000;
-    int repeat = 100;
+    int repeat = 1;
 
     std::vector<int> array(sample_size);
     std::vector<int> reversed_array(sample_size);
